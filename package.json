@@ -1,0 +1,31 @@
+{
+  "name": "ytdl-core-discord",
+  "version": "1.0.0",
+  "description": "A ytdl-core wrapper focused on efficiency for use in Discord music bots",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amishshah/ytdl-core-discord.git"
+  },
+  "keywords": [
+    "discord",
+    "ytdl",
+    "youtube",
+    "audio",
+    "music",
+    "bot"
+  ],
+  "author": "Amish Shah <amishshah.2k@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/amishshah/ytdl-core-discord/issues"
+  },
+  "homepage": "https://github.com/amishshah/ytdl-core-discord#readme",
+  "dependencies": {
+    "prism-media": "^0.4.2",
+    "ytdl-core": "^0.29.1"
+  }
+}
