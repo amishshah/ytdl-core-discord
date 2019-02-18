@@ -4,8 +4,7 @@ const prism = require('prism-media');
 function filter(format) {
 	return format.audioEncoding === 'opus' &&
     format.container === 'webm' &&
-    format.audio_sample_rate == 48000 &&
-    !format.live; // prism cannot yet play live webm files
+    format.audio_sample_rate == 48000;
 }
 
 module.exports = function download(url, options = {}) {
@@ -14,7 +13,7 @@ module.exports = function download(url, options = {}) {
 		ytdl.getInfo(url, (err, info) => {
 			if (err) return reject(err);
 			// Prefer opus
-			const canDemux = info.formats.find(filter);
+			const canDemux = info.formats.find(filter) && info.length_seconds != 0;
 			if (canDemux) Object.assign(options, { filter });
 			const ytdlStream = ytdl.downloadFromInfo(info, options);
 			if (canDemux) {
