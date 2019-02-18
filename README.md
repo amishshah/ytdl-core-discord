@@ -1,4 +1,10 @@
 # ytdl-core-discord
+
+[![Build Status](https://travis-ci.org/amishshah/ytdl-core-discord.svg?branch=master)](https://travis-ci.org/amishshah/ytdl-core-discord)
+[![dependencies](https://david-dm.org/amishshah/ytdl-core-discord/status.svg)](https://david-dm.org/amishshah/ytdl-core-discord)
+[![npm](https://img.shields.io/npm/dt/ytdl-core-discord.svg)](https://www.npmjs.com/package/ytdl-core-discord)
+[![Patreon](https://img.shields.io/badge/donate-patreon-F96854.svg)](https://www.patreon.com/discordjs)
+
 A ytdl-core wrapper focused on efficiency for use in Discord music bots.
 
 You can pass the exact same arguments as you would with the ytdl-core module, with the exception that
@@ -39,3 +45,5 @@ async function play(connection, url) {
   connection.play(await ytdl(url), { type: 'opus' });
 }
 ```
+
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/discordjs)
