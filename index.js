@@ -13,8 +13,8 @@ module.exports = function download(url, options = {}) {
 			if (err) return reject(err);
 			// Prefer opus
 			const canDemux = info.formats.find(filter) && info.length_seconds != 0;
-			if (canDemux) Object.assign(options, { filter });
-			else if (info.length_seconds != 0) Object.assign(options, { filter: 'audioonly' });
+			if (canDemux) options = { ...options, filter };
+			else if (info.length_seconds != 0) options = { ...options, filter: 'audioonly' };
 			const ytdlStream = ytdl.downloadFromInfo(info, options);
 			if (canDemux) {
 				const demuxer = new prism.opus.WebmDemuxer();
