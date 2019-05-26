@@ -12,16 +12,17 @@ module.exports = function download(url, options = {}) {
 		ytdl.getInfo(url, (err, info) => {
 			if (err) return reject(err);
 			// Prefer opus
-			const canDemux = info.formats.find(filter) && info.length_seconds != 0;
+			const format = info.formats.find(filter);
+			const canDemux = format && info.length_seconds != 0;
 			if (canDemux) options = { ...options, filter };
 			else if (info.length_seconds != 0) options = { ...options, filter: 'audioonly' };
-			const ytdlStream = ytdl.downloadFromInfo(info, options);
 			if (canDemux) {
 				const demuxer = new prism.opus.WebmDemuxer();
-				return resolve(ytdlStream.pipe(demuxer).on('end', () => demuxer.destroy()));
+				return resolve(ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy()));
 			} else {
 				const transcoder = new prism.FFmpeg({
 					args: [
+						'-i', format.url,
 						'-analyzeduration', '0',
 						'-loglevel', '0',
 						'-f', 's16le',
@@ -30,7 +31,7 @@ module.exports = function download(url, options = {}) {
 					],
 				});
 				const opus = new prism.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 });
-				const stream = ytdlStream.pipe(transcoder).pipe(opus);
+				const stream = transcoder.pipe(opus);
 				stream.on('close', () => {
 					transcoder.destroy();
 					opus.destroy();
