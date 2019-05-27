@@ -22,6 +22,9 @@ module.exports = function download(url, options = {}) {
 			} else {
 				const transcoder = new prism.FFmpeg({
 					args: [
+						'-reconnect', '1',
+						'-reconnect_streamed', '1',
+						'-reconnect_delay_max', '5',
 						'-i', format.url,
 						'-analyzeduration', '0',
 						'-loglevel', '0',
