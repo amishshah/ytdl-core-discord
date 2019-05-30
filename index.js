@@ -3,8 +3,8 @@ const prism = require('prism-media');
 
 function filter(format) {
 	return format.audioEncoding === 'opus' &&
-    format.container === 'webm' &&
-    format.audio_sample_rate == 48000;
+		format.container === 'webm' &&
+		format.audio_sample_rate == 48000;
 }
 
 module.exports = function download(url, options = {}) {
