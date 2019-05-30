@@ -22,17 +22,7 @@ using FFmpeg to encode the stream in Opus. Many new videos on YouTube are availa
 so hopefully this isn't frequent.
 
 Put simply, this module finds the most efficient way to extract a stream of Opus audio from a
-YouTube video.
-
-## Usage in Discord.js 11.4.x
-
-```js
-const ytdl = require('ytdl-core-discord');
-
-async function play(connection, url) {
-  connection.playOpusStream(await ytdl(url));
-}
-```
+YouTube video. Even in the worst case, it should still give better performance than `ytdl-core`.
 
 ## Usage in Discord.js 12.x
 
@@ -41,6 +31,16 @@ const ytdl = require('ytdl-core-discord');
 
 async function play(connection, url) {
   connection.play(await ytdl(url), { type: 'opus' });
+}
+```
+
+## Usage in Discord.js 11.4.x
+
+```js
+const ytdl = require('ytdl-core-discord');
+
+async function play(connection, url) {
+  connection.playOpusStream(await ytdl(url));
 }
 ```
 
