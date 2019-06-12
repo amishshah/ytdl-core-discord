@@ -7,7 +7,7 @@ function filter(format) {
 		format.audio_sample_rate == 48000;
 }
 
-module.exports = function download(url, options = {}) {
+const ytdlDiscord = (url, options = {}) => {
 	return new Promise((resolve, reject) => {
 		ytdl.getInfo(url, (err, info) => {
 			if (err) return reject(err);
@@ -44,3 +44,15 @@ module.exports = function download(url, options = {}) {
 		});
 	});
 };
+
+ytdlDiscord.getBasicInfo = ytdl.getBasicInfo;
+ytdlDiscord.getInfo = ytdl.getFullInfo;
+ytdlDiscord.downloadFromInfo = ytdl.downloadFromInfo;
+ytdlDiscord.chooseFormat = ytdl.chooseFormat;
+ytdlDiscord.filterFormats = ytdl.filterFormats;
+ytdlDiscord.validateID = ytdl.validateID;
+ytdlDiscord.validateURL = ytdl.validateURL;
+ytdlDiscord.getURLVideoID = ytdl.getURLVideoID;
+ytdlDiscord.getVideoID = ytdl.getVideoID;
+
+module.exports = ytdlDiscord;
