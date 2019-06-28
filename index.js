@@ -7,6 +7,18 @@ function filter(format) {
 		format.audio_sample_rate == 48000;
 }
 
+/**
+ * Tries to find the highest bitrate audio-only format. Failing that, will use any available audio format.
+ * @private
+ * @param {Object[]} formats The formats to select from
+ */
+function nextBestFormat(formats) {
+	formats = formats
+		.filter(format => format.audioBitrate)
+		.sort((a, b) => b.audioBitrate - a.audioBitrate);
+	return formats.find(format => !format.bitrate) || formats[0];
+}
+
 const ytdlDiscord = (url, options = {}) => {
 	return new Promise((resolve, reject) => {
 		ytdl.getInfo(url, (err, info) => {
@@ -25,7 +37,7 @@ const ytdlDiscord = (url, options = {}) => {
 						'-reconnect', '1',
 						'-reconnect_streamed', '1',
 						'-reconnect_delay_max', '5',
-						'-i', format.url,
+						'-i', nextBestFormat(info.formats).url,
 						'-analyzeduration', '0',
 						'-loglevel', '0',
 						'-f', 's16le',
