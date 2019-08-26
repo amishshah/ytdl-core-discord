@@ -1,7 +1,10 @@
-/// <reference types="node" />
+import ytdl from 'ytdl-core';
 import { Readable } from 'stream';
-import { downloadOptions, videoFormat } from 'ytdl-core';
-export interface PrismVideoFormat extends videoFormat {
-	audio_sample_rate?: number;
+
+declare function download(link: string, options?: ytdl.downloadOptions): Promise<Readable>;
+
+declare namespace ytdlDiscord {
+  const newDownload: typeof download & typeof ytdl;
 }
-export declare function download(url: string, options?: downloadOptions): Promise<Readable>;
+
+export = ytdlDiscord.newDownload;

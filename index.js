@@ -19,7 +19,7 @@ function nextBestFormat(formats) {
 	return formats.find(format => !format.bitrate) || formats[0];
 }
 
-module.exports = function download(url, options = {}) {
+function download(url, options = {}) {
 	return new Promise((resolve, reject) => {
 		ytdl.getInfo(url, (err, info) => {
 			if (err) return reject(err);
@@ -55,4 +55,6 @@ module.exports = function download(url, options = {}) {
 			}
 		});
 	});
-};
+}
+
+module.exports = Object.assign(download, ytdl);
