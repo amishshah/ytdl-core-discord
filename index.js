@@ -45,7 +45,7 @@ function download(url, options = {}) {
 						'-ac', '2',
 					],
 				});
-				const opus = new prism.opus.Encoder({ rate: 48000, channels: 2, frameSize: 2880 });
+				const opus = new prism.opus.Encoder({ rate: 48000, channels: 2, frameSize: 1920 });
 				const stream = transcoder.pipe(opus);
 				stream.on('close', () => {
 					transcoder.destroy();
