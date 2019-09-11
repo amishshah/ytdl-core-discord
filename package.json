@@ -28,7 +28,7 @@
   "dependencies": {
     "@types/node": "^11.11.3",
     "prism-media": "Hackzzila/prism-media",
-    "ytdl-core": "^0.29.1"
+    "ytdl-core": "ayanabot/node-ytdl-core"
   },
   "devDependencies": {
     "eslint": "^5.15.2"
