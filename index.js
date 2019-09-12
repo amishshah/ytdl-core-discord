@@ -29,7 +29,7 @@ function download(url, options = {}) {
 			if (canDemux) options = { ...options, filter };
 			else if (info.length_seconds != 0) options = { ...options, filter: 'audioonly' };
 			if (canDemux) {
-				const demuxer = new prism.WebmOpusDemuxer();
+				const demuxer = new prism.opus.WebmDemuxer();
 				return resolve(ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy()));
 			} else {
 				const transcoder = new prism.FFmpeg({
