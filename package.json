@@ -27,7 +27,7 @@
   "homepage": "https://github.com/amishshah/ytdl-core-discord#readme",
   "dependencies": {
     "@types/node": "^11.11.3",
-    "prism-media": "Hackzzila/prism-media",
+    "prism-media": "^1.1.0",
     "ytdl-core": "ayanabot/node-ytdl-core"
   },
   "devDependencies": {
