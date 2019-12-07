@@ -2,9 +2,9 @@ const ytdl = require('ytdl-core');
 const prism = require('prism-media');
 
 function filter(format) {
-	return format.audioEncoding === 'opus' &&
+	return format.codecs === 'opus' &&
 		format.container === 'webm' &&
-		format.audio_sample_rate == 48000;
+		format.audioSampleRate == 48000;
 }
 
 /**
