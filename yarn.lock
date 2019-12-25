@@ -804,9 +804,9 @@ write@1.0.3:
     mkdirp "^0.5.1"
 
 ytdl-core@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-1.0.3.tgz#8135565462c61204a596cfb4785f909b16783e8a"
-  integrity sha512-sBOVokjrAigKTEn248MJ+JpS5ifay/vBzYGMDeZhG61xmgthev6yHXBgEgm+M8ySDQXXVjOTmUtY3GHbX988KA==
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-1.0.5.tgz#074c04c14c478225569791486b855cbd6d035410"
+  integrity sha512-IAmBgsGz61RKsIHKls3qDNHOXPUGAEjMI7EXOYECtdkSRTsgPEbJ1MwSLk+3L5SAExcHrHKoql4uXFu3Bhw3gg==
   dependencies:
     html-entities "^1.1.3"
     m3u8stream "^0.6.3"
