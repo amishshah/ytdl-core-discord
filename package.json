@@ -26,9 +26,9 @@
   },
   "homepage": "https://github.com/amishshah/ytdl-core-discord#readme",
   "dependencies": {
-    "@types/node": "^13.11.1",
-    "prism-media": "^1.2.1",
-    "ytdl-core": "^2.0.1"
+    "@types/node": "^13.13.5",
+    "prism-media": "^1.2.2",
+    "ytdl-core": "^2.1.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0"
