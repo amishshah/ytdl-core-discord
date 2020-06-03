@@ -28,7 +28,7 @@
   "dependencies": {
     "@types/node": "^13.13.5",
     "prism-media": "^1.2.2",
-    "ytdl-core": "^2.1.2"
+    "ytdl-core": "^3.1.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0"
