@@ -32,12 +32,14 @@ function download(url, options = {}) {
 				const demuxer = new prism.opus.WebmDemuxer();
 				return resolve(ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy()));
 			} else {
+				const bestFormat = nextBestFormat(info.formats);
+				if (!bestFormat) return reject('No suitable format found');
 				const transcoder = new prism.FFmpeg({
 					args: [
 						'-reconnect', '1',
 						'-reconnect_streamed', '1',
 						'-reconnect_delay_max', '5',
-						'-i', nextBestFormat(info.formats).url,
+						'-i', bestFormat.url,
 						'-analyzeduration', '0',
 						'-loglevel', '0',
 						'-f', 's16le',
