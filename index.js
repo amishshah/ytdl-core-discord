@@ -11,10 +11,13 @@ function filter(format) {
  * Tries to find the highest bitrate audio-only format. Failing that, will use any available audio format.
  * @private
  * @param {Object[]} formats The formats to select from
+ * @param {boolean} isLive Whether the content is live or not
  */
-function nextBestFormat(formats) {
+function nextBestFormat(formats, isLive) {
+	let filter = format => format.audioBitrate;
+	if (isLive) filter = format => format.audioBitrate && format.isHLS;
 	formats = formats
-		.filter(format => format.audioBitrate)
+		.filter(filter)
 		.sort((a, b) => b.audioBitrate - a.audioBitrate);
 	return formats.find(format => !format.bitrate) || formats[0];
 }
@@ -32,7 +35,7 @@ function download(url, options = {}) {
 				const demuxer = new prism.opus.WebmDemuxer();
 				return resolve(ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy()));
 			} else {
-				const bestFormat = nextBestFormat(info.formats);
+				const bestFormat = nextBestFormat(info.formats, info.player_response.videoDetails.isLiveContent);
 				if (!bestFormat) return reject('No suitable format found');
 				const transcoder = new prism.FFmpeg({
 					args: [
