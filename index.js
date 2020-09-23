@@ -26,9 +26,9 @@ async function download(url, options = {}) {
 	const info = await ytdl.getInfo(url);
 	// Prefer opus
 	const format = info.formats.find(filter);
-	const canDemux = format && info.length_seconds != 0;
+	const canDemux = format && info.videoDetails.lengthSeconds != 0;
 	if (canDemux) options = { ...options, filter };
-	else if (info.length_seconds != 0) options = { ...options, filter: 'audioonly' };
+	else if (info.videoDetails.lengthSeconds != 0) options = { ...options, filter: 'audioonly' };
 	if (canDemux) {
 		const demuxer = new prism.opus.WebmDemuxer();
 		return ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy());
