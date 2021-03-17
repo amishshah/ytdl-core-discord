@@ -31,7 +31,14 @@ async function download(url, options = {}) {
 	else if (info.videoDetails.lengthSeconds != 0) options = { ...options, filter: 'audioonly' };
 	if (canDemux) {
 		const demuxer = new prism.opus.WebmDemuxer();
-		return ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy());
+		// Destroy stream (Remove Memory leak)
+		const stream = ytdl.downloadFromInfo(info, options);
+		const rev = stream.pipe(demuxer).on('end', () => demuxer.destroy());
+		rev._destroy = () => {
+			stream.destroy();
+			demuxer.destroy();
+		}
+		return rev;
 	} else {
 		const bestFormat = nextBestFormat(info.formats, info.player_response.videoDetails.isLiveContent);
 		if (!bestFormat) throw new Error('No suitable format found');
