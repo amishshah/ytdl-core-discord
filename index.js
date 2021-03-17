@@ -37,7 +37,7 @@ async function download(url, options = {}) {
 		rev._destroy = () => {
 			stream.destroy();
 			demuxer.destroy();
-		}
+		};
 		return rev;
 	} else {
 		const bestFormat = nextBestFormat(info.formats, info.player_response.videoDetails.isLiveContent);
