@@ -33,7 +33,7 @@ async function download(url, options = {}) {
 		const demuxer = new prism.opus.WebmDemuxer();
 		return ytdl.downloadFromInfo(info, options).pipe(demuxer).on('end', () => demuxer.destroy());
 	} else {
-		const bestFormat = nextBestFormat(info.formats, info.player_response.videoDetails.isLiveContent);
+		const bestFormat = nextBestFormat(info.formats, info.videoDetails.isLiveContent);
 		if (!bestFormat) throw new Error('No suitable format found');
 		const transcoder = new prism.FFmpeg({
 			args: [
