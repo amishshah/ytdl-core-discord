@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core');
 const prism = require('prism-media');
+const { pipeline } = require('stream');
 
 function filter(format) {
 	return format.codecs === 'opus' &&
@@ -22,6 +23,8 @@ function nextBestFormat(formats, isLive) {
 	return formats.find(format => !format.bitrate) || formats[0];
 }
 
+const noop = () => {};
+
 async function download(url, options = {}) {
 	const info = await ytdl.getInfo(url);
 	// Prefer opus
@@ -31,16 +34,12 @@ async function download(url, options = {}) {
 	else if (info.videoDetails.lengthSeconds != 0) options = { ...options, filter: 'audioonly' };
 	if (canDemux) {
 		const demuxer = new prism.opus.WebmDemuxer();
-		// Destroy stream (Remove Memory leak)
-		const stream = ytdl.downloadFromInfo(info, options);
-		const rev = stream.pipe(demuxer).on('end', () => demuxer.destroy());
-		rev._destroy = () => {
-			stream.destroy();
-			demuxer.destroy();
-		};
-		return rev;
+		return pipeline([
+			ytdl.downloadFromInfo(info, options),
+			demuxer,
+		], noop);
 	} else {
-		const bestFormat = nextBestFormat(info.formats, info.player_response.videoDetails.isLiveContent);
+		const bestFormat = nextBestFormat(info.formats, info.videoDetails.isLiveContent);
 		if (!bestFormat) throw new Error('No suitable format found');
 		const transcoder = new prism.FFmpeg({
 			args: [
@@ -54,14 +53,10 @@ async function download(url, options = {}) {
 				'-ar', '48000',
 				'-ac', '2',
 			],
+			shell: false,
 		});
 		const opus = new prism.opus.Encoder({ rate: 48000, channels: 2, frameSize: 960 });
-		const stream = transcoder.pipe(opus);
-		stream.on('close', () => {
-			transcoder.destroy();
-			opus.destroy();
-		});
-		return stream;
+		return pipeline([transcoder, opus], noop);
 	}
 }
 
