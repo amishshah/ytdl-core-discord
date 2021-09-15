@@ -24,6 +24,20 @@ so hopefully this isn't frequent.
 Put simply, this module finds the most efficient way to extract a stream of Opus audio from a
 YouTube video. Even in the worst case, it should still give better performance than `ytdl-core`.
 
+## Usage in Discord.js 13.x
+
+```js
+const ytdl = require('ytdl-core-discord');
+const { createAudioResource, createAudioPlayer } = require('@discordjs/voice');
+
+async function play(connection, url) {
+    const player = createAudioPlayer();
+    const resource = createAudioResource(await ytdl(url));
+    connection.subscribe(player)
+    player.play(resource)
+}
+```
+
 ## Usage in Discord.js 12.x
 
 ```js
