@@ -26,7 +26,7 @@ function nextBestFormat(formats, isLive) {
 const noop = () => {};
 
 async function download(url, options = {}) {
-	const info = await ytdl.getInfo(url);
+	const info = await ytdl.getInfo(url, options);
 	// Prefer opus
 	const format = info.formats.find(filter);
 	const canDemux = format && info.videoDetails.lengthSeconds != 0;
